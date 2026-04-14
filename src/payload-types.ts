@@ -72,6 +72,9 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    events: Event;
+    calendarSources: CalendarSource;
+    calendarExclusionRules: CalendarExclusionRule;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +97,9 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    calendarSources: CalendarSourcesSelect<false> | CalendarSourcesSelect<true>;
+    calendarExclusionRules: CalendarExclusionRulesSelect<false> | CalendarExclusionRulesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -783,6 +789,70 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug?: string | null;
+  description?: string | null;
+  location?: string | null;
+  startsAt: string;
+  endsAt?: string | null;
+  isPublished?: boolean | null;
+  isHidden?: boolean | null;
+  externalUid?: string | null;
+  categories?:
+    | {
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  exclusionReason?: string | null;
+  lastImportedAt?: string | null;
+  overrideTitle?: string | null;
+  overrideDescription?: string | null;
+  overrideLocation?: string | null;
+  overrideImage?: (number | null) | Media;
+  source?: (number | null) | CalendarSource;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarSources".
+ */
+export interface CalendarSource {
+  id: number;
+  name: string;
+  icsUrl: string;
+  isActive?: boolean | null;
+  lastSyncedAt?: string | null;
+  lastSyncStatus?: string | null;
+  lastSyncMessage?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarExclusionRules".
+ */
+export interface CalendarExclusionRule {
+  id: number;
+  source: number | CalendarSource;
+  ruleType: 'UID_EQUALS' | 'TITLE_CONTAINS' | 'LOCATION_CONTAINS' | 'CATEGORY_EQUALS';
+  value: string;
+  description?: string | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -990,6 +1060,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'calendarSources';
+        value: number | CalendarSource;
+      } | null)
+    | ({
+        relationTo: 'calendarExclusionRules';
+        value: number | CalendarExclusionRule;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1355,6 +1437,64 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  description?: T;
+  location?: T;
+  startsAt?: T;
+  endsAt?: T;
+  isPublished?: T;
+  isHidden?: T;
+  externalUid?: T;
+  categories?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  exclusionReason?: T;
+  lastImportedAt?: T;
+  overrideTitle?: T;
+  overrideDescription?: T;
+  overrideLocation?: T;
+  overrideImage?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarSources_select".
+ */
+export interface CalendarSourcesSelect<T extends boolean = true> {
+  name?: T;
+  icsUrl?: T;
+  isActive?: T;
+  lastSyncedAt?: T;
+  lastSyncStatus?: T;
+  lastSyncMessage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarExclusionRules_select".
+ */
+export interface CalendarExclusionRulesSelect<T extends boolean = true> {
+  source?: T;
+  ruleType?: T;
+  value?: T;
+  description?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

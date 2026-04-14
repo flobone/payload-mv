@@ -9,6 +9,12 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+
+import { Events } from './collections/Events'
+import { CalendarSources } from './collections/CalendarSources'
+import { CalendarExclusionRules } from './collections/CalendarExclusionRules'
+import { syncCalendars } from './utilities/calendar-sync'
+
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -63,7 +69,16 @@ export default buildConfig({
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Events,
+    CalendarSources,
+    CalendarExclusionRules,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [
     ...plugins,
@@ -98,4 +113,27 @@ export default buildConfig({
     },
     tasks: [],
   },
+  endpoints: [
+    {
+      path: '/sync-calendars',
+      method: 'post',
+      handler: async (req) => {
+        const secret = process.env.CRON_SECRET
+
+        if (secret) {
+          const authHeader = req.headers.get('authorization')
+          const querySecret = req.url
+            ? new URL(req.url).searchParams.get('secret')
+            : null
+
+          if (authHeader !== `Bearer ${secret}` && querySecret !== secret) {
+            return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
+          }
+        }
+
+        const result = await syncCalendars(req.payload)
+        return Response.json(result)
+      },
+    },
+  ],
 })
