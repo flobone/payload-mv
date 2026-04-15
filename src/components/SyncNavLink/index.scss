@@ -1,0 +1,23 @@
+.sync-nav-link {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--theme-elevation-150);
+}
+
+.sync-nav-link__link {
+  display: block;
+  font-weight: 600;
+  color: var(--theme-text);
+  text-decoration: none;
+}
+
+.sync-nav-link__link:hover {
+  color: var(--theme-success-600);
+}
+
+.sync-nav-link__hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--theme-text-secondary);
+}

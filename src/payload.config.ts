@@ -34,6 +34,7 @@ export default buildConfig({
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
+      afterNavLinks: ['@/components/SyncNavLink'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -114,6 +115,27 @@ export default buildConfig({
     tasks: [],
   },
   endpoints: [
+    {
+      path: '/sync-calendars',
+      method: 'get',
+      handler: async (req) => {
+        const secret = process.env.CRON_SECRET
+
+        if (secret) {
+          const authHeader = req.headers.get('authorization')
+          const querySecret = req.url
+            ? new URL(req.url).searchParams.get('secret')
+            : null
+
+          if (authHeader !== `Bearer ${secret}` && querySecret !== secret) {
+            return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
+          }
+        }
+
+        const result = await syncCalendars(req.payload)
+        return Response.json(result)
+      },
+    },
     {
       path: '/sync-calendars',
       method: 'post',
