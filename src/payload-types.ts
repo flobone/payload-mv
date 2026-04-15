@@ -207,7 +207,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | UpcomingEventsBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -789,6 +789,23 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UpcomingEventsBlock".
+ */
+export interface UpcomingEventsBlock {
+  eyebrow?: string | null;
+  title: string;
+  text?: string | null;
+  count: number;
+  showLocation?: boolean | null;
+  linkLabel?: string | null;
+  linkHref?: string | null;
+  backgroundStyle?: ('light' | 'blue' | 'green') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'upcomingEvents';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
@@ -1171,6 +1188,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        upcomingEvents?: T | UpcomingEventsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1267,6 +1285,22 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UpcomingEventsBlock_select".
+ */
+export interface UpcomingEventsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  text?: T;
+  count?: T;
+  showLocation?: T;
+  linkLabel?: T;
+  linkHref?: T;
+  backgroundStyle?: T;
   id?: T;
   blockName?: T;
 }
