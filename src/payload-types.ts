@@ -207,7 +207,15 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | UpcomingEventsBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | UpcomingEventsBlock
+    | YouTubeEmbedBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -806,6 +814,20 @@ export interface UpcomingEventsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "YouTubeEmbedBlock".
+ */
+export interface YouTubeEmbedBlock {
+  eyebrow?: string | null;
+  title?: string | null;
+  text?: string | null;
+  youtubeUrl: string;
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'youtubeEmbed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
@@ -1189,6 +1211,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         upcomingEvents?: T | UpcomingEventsBlockSelect<T>;
+        youtubeEmbed?: T | YouTubeEmbedBlockSelect<T>;
       };
   meta?:
     | T
@@ -1301,6 +1324,19 @@ export interface UpcomingEventsBlockSelect<T extends boolean = true> {
   linkLabel?: T;
   linkHref?: T;
   backgroundStyle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "YouTubeEmbedBlock_select".
+ */
+export interface YouTubeEmbedBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  text?: T;
+  youtubeUrl?: T;
+  caption?: T;
   id?: T;
   blockName?: T;
 }
