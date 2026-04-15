@@ -118,12 +118,10 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    homepage: Homepage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1833,80 +1831,6 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homepage".
- */
-export interface Homepage {
-  id: number;
-  hero: {
-    eyebrow?: string | null;
-    headline: string;
-    text?: string | null;
-    primaryButtonLabel?: string | null;
-    primaryButtonLink?: string | null;
-    secondaryButtonLabel?: string | null;
-    secondaryButtonLink?: string | null;
-    showLogo?: boolean | null;
-  };
-  featuredEvent?: {
-    sectionTitle?: string | null;
-    mode?: ('auto' | 'manual') | null;
-    manualTitle?: string | null;
-    manualDateText?: string | null;
-    manualLocation?: string | null;
-    manualLink?: string | null;
-  };
-  aboutSection?: {
-    title?: string | null;
-    text?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    image?: (number | null) | Media;
-    linkLabel?: string | null;
-    linkHref?: string | null;
-  };
-  youthSection?: {
-    title?: string | null;
-    text?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    linkLabel?: string | null;
-    linkHref?: string | null;
-  };
-  contactSection?: {
-    title?: string | null;
-    text?: string | null;
-    linkLabel?: string | null;
-    linkHref?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1946,62 +1870,6 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homepage_select".
- */
-export interface HomepageSelect<T extends boolean = true> {
-  hero?:
-    | T
-    | {
-        eyebrow?: T;
-        headline?: T;
-        text?: T;
-        primaryButtonLabel?: T;
-        primaryButtonLink?: T;
-        secondaryButtonLabel?: T;
-        secondaryButtonLink?: T;
-        showLogo?: T;
-      };
-  featuredEvent?:
-    | T
-    | {
-        sectionTitle?: T;
-        mode?: T;
-        manualTitle?: T;
-        manualDateText?: T;
-        manualLocation?: T;
-        manualLink?: T;
-      };
-  aboutSection?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        image?: T;
-        linkLabel?: T;
-        linkHref?: T;
-      };
-  youthSection?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        linkLabel?: T;
-        linkHref?: T;
-      };
-  contactSection?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        linkLabel?: T;
-        linkHref?: T;
       };
   updatedAt?: T;
   createdAt?: T;

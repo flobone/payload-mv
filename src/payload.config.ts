@@ -17,7 +17,7 @@ import { syncCalendars } from './utilities/calendar-sync'
 
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { Homepage } from './globals/Homepage'
+// import { Homepage } from './globals/Homepage'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -91,7 +91,7 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
-  globals: [Header, Footer, Homepage],
+  globals: [Header, Footer], //, Homepage],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
